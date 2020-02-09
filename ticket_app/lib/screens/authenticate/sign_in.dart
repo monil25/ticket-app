@@ -49,7 +49,12 @@ class _SignInState extends State<SignIn> {
                     TextFormField(
                       decoration:
                           textInputDecoration.copyWith(hintText: 'email'),
-                      validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                      validator: (input) {
+                        if (input.isEmpty) {
+                          return 'Please fill the email';
+                        }
+                        return null;
+                      },
                       onChanged: (val) {
                         setState(() => email = val);
                       },
