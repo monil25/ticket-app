@@ -6,6 +6,7 @@ import 'package:email_validator/email_validator.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
+  //constructor recieving a function
   Register({this.toggleView});
 
   @override
@@ -39,6 +40,7 @@ class _RegisterState extends State<Register> {
                 FlatButton.icon(
                   icon: Icon(Icons.person),
                   label: Text('Sign In'),
+                  //widget.toggleview used because it is property of widget not of current state
                   onPressed: () => widget.toggleView(),
                 ),
               ],
