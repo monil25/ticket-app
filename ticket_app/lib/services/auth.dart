@@ -30,9 +30,12 @@ class AuthService {
 
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
+    print("SignIn was called");
     try {
+      print(_auth);
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+      print(result);
       FirebaseUser user = result.user;
       return user;
     } catch (error) {
@@ -44,10 +47,12 @@ class AuthService {
   // register with email and password
   Future registerWithEmailAndPassword(
       String email, String password, String name, String mobileNumber) async {
+    print("Registeration was called");
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
+      print(user);
       user.sendEmailVerification();
       // create a new document for the user with the uid
       await DatabaseService(uid: user.uid)

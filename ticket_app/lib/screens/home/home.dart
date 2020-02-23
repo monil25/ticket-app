@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_app/screens/book_ticket_screen/book_ticket.dart';
 import 'package:ticket_app/services/auth.dart';
 
 class Home extends StatelessWidget {
@@ -32,7 +33,7 @@ class Home extends StatelessWidget {
               ),
             ),
             child: Container(
-              margin: EdgeInsets.fromLTRB(90, 50, 90, 0),
+              margin: EdgeInsets.fromLTRB(40, 50, 40, 0),
               child: ListView(
                 children: <Widget>[
                   // OutlineButton(
@@ -60,7 +61,7 @@ class Home extends StatelessWidget {
                   //     )
                   // ),
                   ButtonTheme(
-                    minWidth: 220,
+                    minWidth: 300,
                     height: 60,
                     child: RaisedButton.icon(
                       onPressed: () {},
@@ -77,10 +78,16 @@ class Home extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                   ),
                   ButtonTheme(
-                    minWidth: 220,
+                    minWidth: 300,
                     height: 60,
                     child: RaisedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BookTicket(),
+                                fullscreenDialog: true));
+                      },
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),
                       icon: Icon(Icons.assignment),
@@ -94,7 +101,7 @@ class Home extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                   ),
                   ButtonTheme(
-                    minWidth: 220,
+                    minWidth: 300,
                     height: 60,
                     child: RaisedButton.icon(
                       onPressed: () {},
@@ -111,7 +118,7 @@ class Home extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                   ),
                   ButtonTheme(
-                    minWidth: 220,
+                    minWidth: 300,
                     height: 60,
                     child: RaisedButton.icon(
                       onPressed: () {},
