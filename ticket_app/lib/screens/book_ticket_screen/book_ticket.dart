@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_app/services/auth.dart';
 import 'package:ticket_app/shared/constants.dart';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
@@ -9,6 +10,7 @@ class BookTicket extends StatefulWidget {
 }
 
 class _BookTicketState extends State<BookTicket> {
+  final AuthService _auth = AuthService();
   AutoCompleteTextField searchTextField1;
   AutoCompleteTextField searchTextField2;
   GlobalKey<AutoCompleteTextFieldState<String>> key1 = new GlobalKey();
@@ -166,10 +168,12 @@ class _BookTicketState extends State<BookTicket> {
                   _showDialog("Please Select Destination");
                 } else {
                   if (!stations.contains(sourceStation)) {
-                    _showDialog("Source Stataion not found");
+                    _showDialog("Source Station not found");
                   } else if (!stations.contains(destStation)) {
-                    _showDialog("Destination Stataion not found");
-                  } else {}
+                    _showDialog("Destination Station not found");
+                  } else {
+                    _auth.bookTicket(sourceStation, destStation);
+                  }
                 }
               }),
         ],
