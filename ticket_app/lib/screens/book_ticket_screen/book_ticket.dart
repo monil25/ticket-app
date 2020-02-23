@@ -37,6 +37,29 @@ class _BookTicketState extends State<BookTicket> {
     );
   }
 
+  void _showDialog(String error) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Error"),
+          content: new Text(error),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +97,10 @@ class _BookTicketState extends State<BookTicket> {
                   print('source $item');
                   searchTextField1.textField.controller.text = item;
                   sourceStation = item;
+                } else {
+                  _showDialog("Source and Destination cannot be same");
+                  sourceStation = "";
+                  searchTextField1.textField.controller.text = "";
                 }
               });
             },
@@ -113,6 +140,10 @@ class _BookTicketState extends State<BookTicket> {
                   destStation = item;
                   print('destination $item');
                   searchTextField2.textField.controller.text = item;
+                } else {
+                  _showDialog("Source and Destination cannot be same");
+                  destStation = "";
+                  searchTextField2.textField.controller.text = "";
                 }
               });
             },
@@ -121,6 +152,26 @@ class _BookTicketState extends State<BookTicket> {
               return _buildRow(item);
             },
           ),
+          SizedBox(height: 20.0),
+          RaisedButton(
+              color: Colors.blue[400],
+              child: Text(
+                'Submit',
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () async {
+                if (sourceStation.length == 0) {
+                  _showDialog("Please Select Source");
+                } else if (destStation.length == 0) {
+                  _showDialog("Please Select Destination");
+                } else {
+                  if (!stations.contains(sourceStation)) {
+                    _showDialog("Source Stataion not found");
+                  } else if (!stations.contains(destStation)) {
+                    _showDialog("Destination Stataion not found");
+                  } else {}
+                }
+              }),
         ],
       ),
     );
