@@ -12,8 +12,8 @@ class DatabaseService {
   final CollectionReference passengerCollection =
       Firestore.instance.collection('passenger');
 
-  final CollectionReference ticketCollection =
-      Firestore.instance.collection('ticket');
+  // final CollectionReference ticketCollection =
+  //     Firestore.instance.collection('ticket');
 
   Future<void> updateUserData(
       String name, String mobileNumber, String email) async {
@@ -24,16 +24,16 @@ class DatabaseService {
     });
   }
 
-  Future<void> bookTicket(String source, String dest) async {
-    //currently ticket valid for same day
-    var now = new DateTime.now();
-    return await ticketCollection.document(uid).setData({
-      'passangerId': uid,
-      'source': source,
-      'destination': dest,
-      'bookTimeStamp': now,
-    });
-  }
+  // Future<void> bookTicket(String source, String dest) async {
+  //   //currently ticket valid for same day
+  //   var now = new DateTime.now();
+  //   return await ticketCollection.document(uid).setData({
+  //     'passangerId': uid,
+  //     'source': source,
+  //     'destination': dest,
+  //     'bookTimeStamp': now,
+  //   });
+  // }
   // brew list from snapshot
   // List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
   //   return snapshot.documents.map((doc) {

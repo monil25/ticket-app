@@ -172,7 +172,9 @@ class _BookTicketState extends State<BookTicket> {
                   } else if (!stations.contains(destStation)) {
                     _showDialog("Destination Station not found");
                   } else {
-                    _auth.bookTicket(sourceStation, destStation);
+                    await _auth.bookTicket(sourceStation, destStation);
+                    print("Ticket Booked");
+                    Navigator.pop(context);
                   }
                 }
               }),
