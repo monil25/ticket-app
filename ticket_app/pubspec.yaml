@@ -35,7 +35,8 @@ dependencies:
   url_launcher: ^3.0.1
   mailer: ^3.0.2
   autocomplete_textfield: ^1.7.3
-
+  pin_code_fields: ^2.4.0
+  flare_flutter: ^2.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_app/screens/book_ticket_screen/book_ticket.dart';
 import 'package:ticket_app/screens/book_ticket_screen/normal_ticket.dart';
 import 'package:ticket_app/screens/book_ticket_screen/season_ticket.dart';
 
@@ -29,16 +30,26 @@ class TicketType extends StatelessWidget {
                     minWidth: 300,
                     height: 60,
                     child: RaisedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        List<String> stations = await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => NormalTicket(),
+                                builder: (context) => BookTicket(),
                                 fullscreenDialog: true));
+                        if (stations != null) {
+                          print("Reached here");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    NormalTicket(stations: stations),
+                                fullscreenDialog: true),
+                          );
+                        }
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),
-                      icon: Icon(Icons.check_circle),
+                      icon: Icon(Icons.assignment),
                       label: Text(
                         "Normal Ticket",
                         style: TextStyle(color: Colors.white),
@@ -52,12 +63,22 @@ class TicketType extends StatelessWidget {
                     minWidth: 300,
                     height: 60,
                     child: RaisedButton.icon(
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        List<String> stations = await Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SeasonTicket(),
+                                builder: (context) => BookTicket(),
                                 fullscreenDialog: true));
+                        if (stations != null) {
+                          print("Reached here");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SeasonTicket(stations: stations),
+                                fullscreenDialog: true),
+                          );
+                        }
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0)),

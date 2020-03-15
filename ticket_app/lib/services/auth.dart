@@ -16,32 +16,15 @@ class AuthService {
 
   // auth change user stream
   Stream<User> get user {
-    return _auth.onAuthStateChanged
-        //.map((FirebaseUser user) => _userFromFirebaseUser(user));
-        .map(_userFromFirebaseUser);
-  }
-
-  // sign in anon
-  Future signInAnon() async {
-    try {
-      AuthResult result = await _auth.signInAnonymously();
-      FirebaseUser user = result.user;
-      currentUser = result.user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+    //.map((FirebaseUser user) => _userFromFirebaseUser(user));
   }
 
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
-    print("SignIn was called");
     try {
-      print(_auth);
       AuthResult result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      print(result);
       FirebaseUser user = result.user;
       currentUser = result.user;
       return user;
@@ -59,14 +42,14 @@ class AuthService {
       AuthResult result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       FirebaseUser user = result.user;
-      print(user);
-      user.sendEmailVerification();
+      //Checking of thisis not done now.
+      //user.sendEmailVerification();
       // create a new document for the user with the uid
       await DatabaseService(uid: user.uid)
           .updateUserData(name, mobileNumber, email);
       return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
+    } catch (error) {
+      print(error.toString());
       return null;
     }
   }
@@ -83,14 +66,18 @@ class AuthService {
   }
 
   //bookticket
-  Future<void> bookTicket(String source, String dest) async {
+  Future bookTheTicket(String source, String dest, String classType,
+      String journeyType, String durationType, int duration) async {
     //currently ticket valid for same day
     var now = new DateTime.now();
-    String date = now.day.toString() +
-        "/" +
-        now.month.toString() +
-        "/" +
-        now.year.toString();
+    var lastValid;
+    if (durationType.compareTo('day') == 0) {
+      lastValid = now.add(new Duration(days: 1));
+    } else {
+      lastValid = new DateTime(now.year, now.month + duration, now.day);
+    }
+    String lastValidDate = dateToString(lastValid);
+    String date = dateToString(now);
     String time = now.hour.toString() +
         ":" +
         now.minute.toString() +
@@ -102,6 +89,17 @@ class AuthService {
       'destination': dest,
       'bookDate': date,
       'bookTime': time,
+      'classType': classType,
+      'journeytype': journeyType,
+      'lastValidDate': lastValidDate,
     });
+  }
+
+  String dateToString(dynamic date) {
+    return (date.day.toString() +
+        "/" +
+        date.month.toString() +
+        "/" +
+        date.year.toString());
   }
 }

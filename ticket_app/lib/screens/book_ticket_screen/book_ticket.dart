@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ticket_app/services/auth.dart';
 import 'package:ticket_app/shared/constants.dart';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
@@ -10,7 +9,6 @@ class BookTicket extends StatefulWidget {
 }
 
 class _BookTicketState extends State<BookTicket> {
-  final AuthService _auth = AuthService();
   AutoCompleteTextField searchTextField1;
   AutoCompleteTextField searchTextField2;
   GlobalKey<AutoCompleteTextFieldState<String>> key1 = new GlobalKey();
@@ -23,6 +21,7 @@ class _BookTicketState extends State<BookTicket> {
   void getStations() {
     stations.addAll(centralStns);
     stations.addAll(westernStns);
+    stations.remove('Dadar'); //As repeated two times in list
   }
 
   void initState() {
@@ -66,7 +65,7 @@ class _BookTicketState extends State<BookTicket> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Book Your Ticket"),
+        title: Text("Select Stations"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -172,9 +171,12 @@ class _BookTicketState extends State<BookTicket> {
                   } else if (!stations.contains(destStation)) {
                     _showDialog("Destination Station not found");
                   } else {
-                    await _auth.bookTicket(sourceStation, destStation);
-                    print("Ticket Booked");
-                    Navigator.pop(context);
+                    // await _auth.bookTicket(sourceStation, destStation);
+                    print("Stations Selected");
+                    List<String> stations = [];
+                    stations.add(sourceStation);
+                    stations.add(destStation);
+                    Navigator.pop(context, stations);
                   }
                 }
               }),
